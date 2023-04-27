@@ -2,6 +2,7 @@ import { useReducer } from "react";
 import RecipeReducer, { initialState } from "../reducers/RecipeReducer";
 
 const useSearchRecipe = (allRecipes, query = "tatlı") => {
+  // eslint-disable-next-line
   const [state, dispatch] = useReducer(RecipeReducer, initialState);
   console.log("usesearch" + state.query);
   //new array including only titles and id
@@ -13,13 +14,13 @@ const useSearchRecipe = (allRecipes, query = "tatlı") => {
 
   var vals = [];
   //searching in titles if includes the query
-  split?.map((sq) => {
+  split?.map((sq) =>
     vals.push(
       titles?.filter((item) =>
         item.toLocaleLowerCase("tr").includes(sq.toLocaleLowerCase("tr"))
       )
-    );
-  });
+    )
+  );
 
   let str = vals?.toString();
 
@@ -27,9 +28,7 @@ const useSearchRecipe = (allRecipes, query = "tatlı") => {
 
   let idList = [];
   //new array including only ids that fits with query
-  titleList?.map((val) => {
-    idList?.push(val.slice(-6));
-  });
+  titleList?.map((val) => idList?.push(val.slice(-6)));
 
   //creating random id based on search query results in id list
   const randomId = idList?.sort(() => 0.5 - Math.random());
@@ -39,7 +38,7 @@ const useSearchRecipe = (allRecipes, query = "tatlı") => {
   );
   const randomSearchedRecipe = randomRecipes && randomRecipes[0];
 
- return [randomSearchedRecipe];
+  return [randomSearchedRecipe];
 };
 
 export default useSearchRecipe;

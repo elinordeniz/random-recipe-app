@@ -1,5 +1,4 @@
 import "../styles/RecipeDetail.css";
-import useRecipe from "../contexts/RecipeContext";
 import useRecipeDetail from "../hooks/useRecipeDetail";
 import { useParams, useNavigate } from "react-router";
 import axios from "../api/recipeApi";
