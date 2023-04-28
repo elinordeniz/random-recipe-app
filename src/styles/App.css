@@ -1,32 +1,30 @@
-@import url('https://fonts.googleapis.com/css2?family=Hanuman:wght@700&family=Montserrat:wght@100;300;400;500;600;700;800;900&family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200&family=Roboto:wght@300;400;500;700;900&display=swap');
-*{
+@import url("https://fonts.googleapis.com/css2?family=Hanuman:wght@700&family=Montserrat:wght@100;300;400;500;600;700;800;900&family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200&family=Roboto:wght@300;400;500;700;900&display=swap");
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   text-decoration: none;
   list-style: none;
-  
 }
 html,
-body{
+body {
   height: 100%;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   background-color: #fefdfa;
 }
 .App {
   height: 100%;
   min-height: 100vh;
   display: flex;
-  max-width:65rem;
-  
+  max-width: 65rem;
+
   width: 100%;
-  border: 1px solid whitesmoke ;
+  border: 1px solid whitesmoke;
   margin: auto;
   align-items: center;
   justify-content: center;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   background-color: white;
   display: flex;
   flex-direction: column;
-
 }

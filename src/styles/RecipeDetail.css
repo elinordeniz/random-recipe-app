@@ -110,19 +110,19 @@
   }
 }
 
-@media (max-width: 800px){
-  .RecipeDetail{
+@media (max-width: 800px) {
+  .RecipeDetail {
     display: block;
   }
-  .first-row{
+  .first-row {
     display: flex;
     flex-direction: column;
   }
 
-  .RecipeDetail .image{
+  .RecipeDetail .image {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-}
+  }
 }

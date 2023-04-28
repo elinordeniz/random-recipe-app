@@ -4,7 +4,6 @@ import RecipeReducer, { initialState } from "../reducers/RecipeReducer";
 const useSearchRecipe = (allRecipes, query = "tatlı") => {
   // eslint-disable-next-line
   const [state, dispatch] = useReducer(RecipeReducer, initialState);
-  console.log("usesearch" + state.query);
   //new array including only titles and id
   const titles = allRecipes?.map((recipe) => {
     return `${recipe.title} ${recipe.id} `;

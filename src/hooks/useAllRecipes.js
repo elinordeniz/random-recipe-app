@@ -9,63 +9,51 @@ const useAllRecipes = (configObj) => {
   const [check, setCheck] = useState(false);
   const effectran = useRef(false);
 
-
   useEffect(() => {
-    console.log("beginning of useeffect rendered");
     const controller = new AbortController();
 
-    dispatch({ 
-      type: "FETCH_START",
-      payload:{
-        allRecipes:[],
-        isLoadingAllRecipes:true,
-        errorAllRecipes:""
-      }
-     });
     if (effectran.current) {
       setIsMounted(true);
-
-      console.log("effectran if block rendered");
+      dispatch({
+        type: "FETCH_START",
+        payload: {
+          //allRecipes:[],
+          isLoadingAllRecipes: true,
+          errorAllRecipes: "",
+        },
+      });
 
       const fetchAllRecipe = async () => {
-        console.log("before try block rendered");
-
         try {
-          console.log("beginning of try block");
           const response = await axiosInstance[method.toLowerCase()](url, {
             ...requestConfig,
             signal: controller.signal,
           });
-         
+
           const res = response.data;
-          console.log("try block rendered");
 
           isMounted &&
             dispatch({
               type: "FETCH_SUCCESS",
-              payload:{  
-                allRecipes:res
-              }
+              payload: {
+                allRecipes: res,
+              },
             });
-
-
         } catch (err) {
-          console.log("err block rendered" + err);
           dispatch({
             type: "FETCH_ERROR",
             payload: {
               errorAllRecipes: err.message,
-            } 
+            },
           });
         } finally {
-          console.log("finally block rendered");
-          setCheck(allRecipes?.length===0);
+          setCheck(allRecipes?.length === 0);
 
           dispatch({
             type: "FETCH_FINALLY",
-            payload:{
-              isLoadingAllRecipes:false
-            }
+            payload: {
+              isLoadingAllRecipes: false,
+            },
           });
         }
       };
@@ -73,7 +61,6 @@ const useAllRecipes = (configObj) => {
       fetchAllRecipe();
     } else {
       effectran.current = true;
-      console.log("effectran else block rendered");
       setCheck(true);
       setIsMounted(false);
       controller && controller.abort();
@@ -82,17 +69,11 @@ const useAllRecipes = (configObj) => {
     return () => {
       controller && controller.abort();
       setIsMounted(false);
-
-      console.log("return rendered");
     };
 
     //eslint-disable-next-line
   }, [check]);
 
-  console.log("end of component right after useeffect");
-
-
-   
-  return [allRecipes,errorAllRecipes,isLoadingAllRecipes];
+  return [allRecipes, errorAllRecipes, isLoadingAllRecipes];
 };
 export default useAllRecipes;

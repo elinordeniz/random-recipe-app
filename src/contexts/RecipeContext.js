@@ -21,21 +21,22 @@ export const RecipeProvider = ({ children }) => {
     },
   });
 
-  const getRandomRecipe = () => {
-    console.log(allRecipes);
+  const getRandomRecipe = async () => {
+    const recipes = await allRecipes;
 
-    allRecipes?.sort(() => 0.5 - Math.random());
-    allRecipes &&
+    recipes?.sort(() => 0.5 - Math.random());
+    recipes &&
       dispatch({
         type: "RECIPE",
         payload: {
-          randomRecipe: allRecipes[0],
+          randomRecipe: recipes[0],
           randomRecipeClick: true,
           searchRecipeClick: false,
         },
       });
-    console.log(allRecipes[0]);
-    navigate("/random-recipe");
+    recipes &&
+      localStorage.setItem("random-recipe", JSON.stringify(recipes[0]));
+    navigate(`/random-recipe`);
   };
 
   const [randomSearchedRecipe] = useSearchRecipe(allRecipes, state.query);
@@ -55,17 +56,6 @@ export const RecipeProvider = ({ children }) => {
         },
       });
   };
-
-  // useEffect(()=>{
-  //   dispatch({
-  //     type: "RECIPE_DETAIL",
-  //     payload:{
-  //         recipeDetail: recipe[0],
-
-  //     }
-  //    })
-  //     console.log("useffet ran in recipe detail one")
-  // }, [recipe])
 
   const onChangeHandle = (e) => {
     dispatch({

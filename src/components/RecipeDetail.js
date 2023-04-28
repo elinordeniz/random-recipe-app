@@ -14,21 +14,17 @@ const RecipeDetail = () => {
       "Content-Language": "tr",
     },
   });
-  const recipeDetail =  recipe[0];
+  const recipeDetail = recipe[0];
 
   const navigate = useNavigate();
-  console.log("errorRecipeDetail" + errorRecipeDetail);
-  console.log(recipeDetail);
-  console.log("isLoadingRecipeDetail" + isLoadingRecipeDetail);
 
-  console.log(
-    "params.id === recipeDetail?.id +params.id " + params.id ===
-      recipeDetail?.id + params.id
-  );
-
-  !isLoadingRecipeDetail  && errorRecipeDetail && !recipeDetail && !params.id && setTimeout(()=>{
-    navigate('/')
-  },5000)
+  !isLoadingRecipeDetail &&
+    errorRecipeDetail &&
+    !recipeDetail &&
+    !params.id &&
+    setTimeout(() => {
+      navigate("/");
+    }, 3000);
   return (
     <div className="RecipeDetail">
       {isLoadingRecipeDetail && !recipeDetail && (
@@ -37,7 +33,7 @@ const RecipeDetail = () => {
       {!isLoadingRecipeDetail && !recipeDetail && errorRecipeDetail && (
         <div className="error">
           Error! {errorRecipeDetail}. It may not connect API. <br />
-          <p>Redirecting to Home in 5 seconds!</p>
+          <p>Redirecting to Home in 3 seconds!</p>
         </div>
       )}
 
@@ -55,14 +51,14 @@ const RecipeDetail = () => {
               <div className="ingredients">
                 <ul>
                   {recipeDetail?.ingredients?.map((ingredient, index) => (
-                    <li key={index}>
-                      <span key={index + 300} style={{ fontWeight: 400 }}>
+                    <li key={index + 4500}>
+                      <span key={index + 1000} style={{ fontWeight: 400 }}>
                         {ingredient.amount}{" "}
                       </span>
-                      <span key={index + 400} style={{ fontWeight: 400 }}>
+                      <span key={index + 2000} style={{ fontWeight: 400 }}>
                         {ingredient.ingredientValue}{" "}
                       </span>
-                      <span key={index + 500} style={{ fontWeight: 200 }}>
+                      <span key={index + 3000} style={{ fontWeight: 200 }}>
                         {ingredient.ingredientKey}
                       </span>
                     </li>
@@ -79,8 +75,8 @@ const RecipeDetail = () => {
               <ul>
                 {recipeDetail?.descriptionSteps?.map((step, key) => (
                   <>
-                    <span key={key + 200}>{step.step}. Adım</span>
-                    <li key={key + 600}>{step.description}</li>
+                    <span key={key + 10000}>{step.step}. Adım</span>
+                    <li key={key + 7000}>{step.description}</li>
                   </>
                 ))}
               </ul>
