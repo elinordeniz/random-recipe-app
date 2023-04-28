@@ -18,18 +18,19 @@ const useRecipeDetail = (configObj) => {
     console.log("beginning of useeffect rendered");
     const controller = new AbortController();
 
-    dispatch({ 
-      type: "FETCH_START",
-      payload:{
-        recipe:[],
-        recipeDetail:[],
-        isLoadingRecipeDetail:true,
-        errorRecipeDetail:""
-      }
-   });
+ 
     if (effectran.current) {
       setIsMounted(true);
-
+      dispatch({ 
+        type: "FETCH_START",
+        payload:{
+          recipe:[],
+          recipeDetail:[],
+          isLoadingRecipeDetail:true,
+          errorRecipeDetail:""
+        }
+     });
+      
       console.log("effectran if block rendered");
 
       const fetchRecipe = async () => {
@@ -42,9 +43,9 @@ const useRecipeDetail = (configObj) => {
             signal: controller.signal,
           });
          
-          const res = response.data;
+          const res =await response.data;
           console.log("try block rendered");
-
+           console.log(res+"res")
           isMounted &&
             dispatch({
               type: "FETCH_SUCCESS",
@@ -77,7 +78,7 @@ const useRecipeDetail = (configObj) => {
         }
       };
 
-    params.id &&  fetchRecipe();
+    fetchRecipe();
     } else {
       effectran.current = true;
       console.log("effectran else block rendered");
@@ -89,7 +90,6 @@ const useRecipeDetail = (configObj) => {
     return () => {
       controller && controller.abort();
       setIsMounted(false);
-
       console.log("return rendered");
     };
 

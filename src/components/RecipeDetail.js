@@ -24,7 +24,7 @@ const RecipeDetail = () => {
     !params.id &&
     setTimeout(() => {
       navigate("/");
-    }, 3000);
+    }, 2000);
   return (
     <div className="RecipeDetail">
       {isLoadingRecipeDetail && !recipeDetail && (
