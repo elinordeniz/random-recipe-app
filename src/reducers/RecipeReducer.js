@@ -21,7 +21,6 @@ const RecipeReducer = (state, action) => {
         ...state,
         allRecipes:action.payload.allRecipes,
         recipe:action.payload.recipe,
-        recipeDetail:action.payload.recipeDetail,
         isLoadingAllRecipes: action.payload.isLoadingAllRecipes,
         isLoadingRecipeDetail:action.payload.isLoadingRecipeDetail,
         errorAllRecipes: action.payload.errorAllRecipes,
