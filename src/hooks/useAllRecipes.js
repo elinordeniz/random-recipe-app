@@ -7,72 +7,88 @@ const useAllRecipes = (configObj) => {
   const { allRecipes, errorAllRecipes, isLoadingAllRecipes } = state;
   const [isMounted, setIsMounted] = useState(false);
   const [check, setCheck] = useState(false);
+  const [allx, setAllx]=useState([])
+
   const effectran = useRef(false);
+  const ink = useRef([]);
 
   useEffect(() => {
+    // console.log("beginning useffect")
     const controller = new AbortController();
-
     if (effectran.current) {
-      setIsMounted(true);
       dispatch({
         type: "FETCH_START",
         payload: {
-          //allRecipes:[],
+          allRecipes: [],
           isLoadingAllRecipes: true,
           errorAllRecipes: "",
         },
       });
-
       const fetchAllRecipe = async () => {
-        try {
-          const response = await axiosInstance[method.toLowerCase()](url, {
-            ...requestConfig,
-            signal: controller.signal,
-          });
-
-          const res = response.data;
-
-          isMounted &&
+        // console.log("beginning fetchAllRecipe")
+        return new Promise(async (resolve, reject) => {
+          try {
+            // console.log("beginning fetchAllRecipe try block")
+  
+            const response = await axiosInstance[method.toLowerCase()](url, {
+              ...requestConfig,
+              signal: controller.signal,
+            });
+  
+            let res = await response.data;
+            // console.log("res"+res)
+  
+            //  console.log("beginning fetchAllRecipe try block > isMounted if block")
+  
+            resolve(res);
+          } catch (err) {
+            console.log(err);
             dispatch({
-              type: "FETCH_SUCCESS",
+              type: "FETCH_ERROR",
               payload: {
-                allRecipes: res,
+                errorAllRecipes: err.message,
+                allRecipes: [],
               },
             });
-        } catch (err) {
+            reject(new Error(err));
+          }
+        });
+      };
+  
+      fetchAllRecipe()
+        .then((res) => {
+        // console.log("beginning fetchAllRecipe then block")
+          setAllx(res);
+          ink.current = res;
           dispatch({
-            type: "FETCH_ERROR",
+            type: "FETCH_SUCCESS",
             payload: {
-              errorAllRecipes: err.message,
+              allRecipes: res,
             },
           });
-        } finally {
-          setCheck(allRecipes?.length === 0);
-
+        })
+        .then(() => {
+          //console.log("beginning fetchAllRecipe 2. then block")
+  
           dispatch({
             type: "FETCH_FINALLY",
             payload: {
               isLoadingAllRecipes: false,
             },
           });
-        }
-      };
-
-      fetchAllRecipe();
+          controller.abort();
+        });
     } else {
+      //console.log("beginning effectran else block")
       effectran.current = true;
       setCheck(true);
-      setIsMounted(false);
-      controller && controller.abort();
     }
-
-    return () => {
-      controller && controller.abort();
-      setIsMounted(false);
-    };
-
+  
+    // console.log("end of useffect just before return")
+  
     //eslint-disable-next-line
-  }, [check]);
+  }, [effectran.current]);
+  
 
   return [allRecipes, errorAllRecipes, isLoadingAllRecipes];
 };

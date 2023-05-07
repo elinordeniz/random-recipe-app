@@ -2,7 +2,7 @@ import "../styles/Nav.css";
 import useRecipe from "../contexts/RecipeContext";
 import { Link } from "react-router-dom";
 const Nav = () => {
-  const { getRandomRecipe, getSearchRecipe, onChangeHandle, query } =
+  const { getRandomRecipe, getSearchRecipe, onChangeHandle, query, allRecipes } =
     useRecipe();
 
   return (

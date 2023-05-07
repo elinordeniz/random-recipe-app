@@ -10,7 +10,8 @@ export const initialState = {
   randomRecipe:[],
   query:"",
   recipeDetail:[],
-  cardError:""
+  cardError:"",
+  randomRecipeLoading:false
 
 };
 
@@ -37,7 +38,8 @@ const RecipeReducer = (state, action) => {
       return {
         ...state,
         errorAllRecipes: action.payload.errorAllRecipes,
-        errorRecipeDetail:action.payload.errorRecipeDetail
+        errorRecipeDetail:action.payload.errorRecipeDetail,
+        allRecipes: action.payload.allRecipes,
       };
     case "FETCH_FINALLY":
       return {
@@ -53,7 +55,9 @@ const RecipeReducer = (state, action) => {
           randomRecipe: action.payload.randomRecipe,
           randomRecipeClick: action.payload.randomRecipeClick,
           searchRecipeClick: action.payload.searchRecipeClick,
-          cardError:action.payload.cardError
+          cardError:action.payload.cardError,
+          randomRecipeLoading: action.payload.randomRecipeLoading
+         
           
         }
 

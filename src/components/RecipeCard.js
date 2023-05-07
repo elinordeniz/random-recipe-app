@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import "../styles/RecipeCard.css";
 import useRecipe from "../contexts/RecipeContext";
@@ -19,9 +19,10 @@ import {
 const RecipeCard = () => {
   const {
     randomRecipe,
-    goToRecipe,
     isLoadingAllRecipes,
     errorAllRecipes,
+    randomRecipeLoading,
+    allRecipes
   } = useRecipe();
   const navigate = useNavigate();
  const localrandom=(localStorage.getItem('random-recipe')!==("undefined" || undefined )) ? JSON.parse(localStorage.getItem('random-recipe')) : null;
@@ -31,29 +32,36 @@ const RecipeCard = () => {
     setModalIsOpen(!modalIsOpen);
   };
 
- console.log(errorAllRecipes)
+   console.log(randomRecipe)
+
+ useEffect(()=>{
   !randomRecipe &&
   !localrandom &&
     errorAllRecipes &&
     !isLoadingAllRecipes &&
+    !randomRecipeLoading &&
+    !allRecipes &&
     setTimeout(() => {
       navigate("/");
     }, 2000);
+    //eslint-disable-next-line
+ },[])
+
 
   return (
     <>
       <div className="RecipeCard">
-        {isLoadingAllRecipes && !randomRecipe && (
+        { randomRecipeLoading  &&(
           <div className="loading">...Loading</div>
         )}
-        {!isLoadingAllRecipes && !randomRecipe && !localrandom && errorAllRecipes && (
+        { !randomRecipe && errorAllRecipes && !randomRecipeLoading && (
           <div className="error">
             Error! {errorAllRecipes}. It may not connect API.
             <br />
             <p>Redirecting to Home in 3 seconds!</p>
           </div>
         )}
-        { (randomRecipe || localrandom) && (
+        { (randomRecipe || localrandom ) && !randomRecipeLoading && !errorAllRecipes && (
           <>
             <div className="image">
               <img src={randomRecipe?.img || localrandom?.img} alt="" />
@@ -69,7 +77,7 @@ const RecipeCard = () => {
 
               <div className="go-recipe-button">
                 <Link to={`/random-recipe/${randomRecipe?.id || localrandom?.id}`}>
-                  <button onClick={goToRecipe}>Tarife Git</button>
+                  <button>Tarife Git</button>
                 </Link>
               </div>
             </div>

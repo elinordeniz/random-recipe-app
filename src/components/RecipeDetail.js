@@ -2,6 +2,7 @@ import "../styles/RecipeDetail.css";
 import useRecipeDetail from "../hooks/useRecipeDetail";
 import { useParams, useNavigate } from "react-router";
 import axios from "../api/recipeApi";
+import { useEffect } from "react";
 
 const RecipeDetail = () => {
   const params = useParams();
@@ -18,13 +19,15 @@ const RecipeDetail = () => {
 
   const navigate = useNavigate();
 
+useEffect(()=>{
   !isLoadingRecipeDetail &&
-    errorRecipeDetail &&
-    !recipeDetail &&
-    !params.id &&
-    setTimeout(() => {
-      navigate("/");
-    }, 2000);
+  errorRecipeDetail &&
+  !recipeDetail &&
+  !params.id &&
+  setTimeout(() => {
+    navigate("/");
+  }, 2000);
+})
   return (
     <div className="RecipeDetail">
       {isLoadingRecipeDetail && !recipeDetail[0] && (
