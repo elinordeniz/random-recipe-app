@@ -22,7 +22,8 @@ const RecipeCard = () => {
     isLoadingAllRecipes,
     errorAllRecipes,
     randomRecipeLoading,
-    allRecipes
+    allRecipes,
+    randomSearchError
   } = useRecipe();
   const navigate = useNavigate();
  const localrandom=(localStorage.getItem('random-recipe')!==("undefined" || undefined )) ? JSON.parse(localStorage.getItem('random-recipe')) : null;
@@ -32,11 +33,10 @@ const RecipeCard = () => {
     setModalIsOpen(!modalIsOpen);
   };
 
-   console.log(randomRecipe)
+   //console.log(randomRecipe)
 
  useEffect(()=>{
   !randomRecipe &&
-  !localrandom &&
     errorAllRecipes &&
     !isLoadingAllRecipes &&
     !randomRecipeLoading &&
@@ -51,8 +51,15 @@ const RecipeCard = () => {
   return (
     <>
       <div className="RecipeCard">
-        { randomRecipeLoading  &&(
+        { randomRecipeLoading  && !errorAllRecipes && (
           <div className="loading">...Loading</div>
+        )}
+        { randomSearchError && !randomRecipeLoading && (
+          <div className="error">
+            Not Found! 
+            <br />
+            <p>Please search for another ingredients</p>
+          </div>
         )}
         { !randomRecipe && errorAllRecipes && !randomRecipeLoading && (
           <div className="error">
@@ -61,7 +68,7 @@ const RecipeCard = () => {
             <p>Redirecting to Home in 3 seconds!</p>
           </div>
         )}
-        { (randomRecipe || localrandom ) && !randomRecipeLoading && !errorAllRecipes && (
+        { (randomRecipe || localrandom ) && !randomRecipeLoading && !randomSearchError && (
           <>
             <div className="image">
               <img src={randomRecipe?.img || localrandom?.img} alt="" />
@@ -71,12 +78,12 @@ const RecipeCard = () => {
                 <h1>{randomRecipe?.title || localrandom?.title}</h1>
               </div>
               <div className="share-buttons">
-                <button>Favorilere Ekle</button>
+                {/* <button>Favorilere Ekle</button> */}
                 <button onClick={toggleModal}>Paylaş</button>
               </div>
 
               <div className="go-recipe-button">
-                <Link to={`/random-recipe/${randomRecipe?.id || localrandom?.id}`}>
+                <Link to={`/random-recipes/${randomRecipe?.id || localrandom?.id}`}>
                   <button>Tarife Git</button>
                 </Link>
               </div>

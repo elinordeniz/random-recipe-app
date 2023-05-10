@@ -11,7 +11,8 @@ export const initialState = {
   query:"",
   recipeDetail:[],
   cardError:"",
-  randomRecipeLoading:false
+  randomRecipeLoading:false,
+  randomSearchError: false
 
 };
 
@@ -56,7 +57,9 @@ const RecipeReducer = (state, action) => {
           randomRecipeClick: action.payload.randomRecipeClick,
           searchRecipeClick: action.payload.searchRecipeClick,
           cardError:action.payload.cardError,
-          randomRecipeLoading: action.payload.randomRecipeLoading
+          randomRecipeLoading: action.payload.randomRecipeLoading,
+          randomSearchError: action.payload.randomSearchError
+
          
           
         }

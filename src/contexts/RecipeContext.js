@@ -11,9 +11,10 @@ const RecipeContext = createContext(initialState);
 
 export const RecipeProvider = ({ children }) => {
   const [state, dispatch] = useReducer(RecipeReducer, initialState);
+  const [recipes, setRecipes]=useState([]);
   const navigate = useNavigate();
 
- 
+
   const [allRecipes, errorAllRecipes, isLoadingAllRecipes, allx, ink] = useAllRecipes ({
     axiosInstance:axios,
     method: "GET",
@@ -22,166 +23,130 @@ export const RecipeProvider = ({ children }) => {
       "Content-Language": "tr",
     }
   })
-   console.log(allRecipes)
 
-  const getRandomRecipe = async () => {
-    const recipes = await allRecipes;
+  useEffect(()=>{
+    setRecipes(allRecipes)
+  }, [allRecipes])
+ 
 
-    recipes?.sort(() => 0.5 - Math.random());
-    recipes &&
-      dispatch({
+   useEffect(()=>{
+    if(state.randomRecipeClick===false || state.searchRecipeClick===true) return;
+
+     if(recipes?.length===0 ||recipes===undefined){
+      recipes?.sort(() => 0.5 - Math.random());
+     dispatch({
+      type: "RECIPE",
+      payload: {
+        randomRecipeLoading: true,
+        randomRecipe: [],
+
+        
+      },
+    });
+    return;
+     }else if (recipes){
+    const randoms=recipes.sort(() => 0.5 - Math.random());
+     dispatch({
+      type: "RECIPE",
+      payload: {
+        randomRecipe: randoms[0],
+        
+      },
+    });
+    localStorage.setItem("random-recipe", JSON.stringify(randoms[0]));
+
+     }
+
+     return ()=>{
+      recipes && dispatch({
         type: "RECIPE",
         payload: {
-          randomRecipe: recipes[0],
-          randomRecipeClick: true,
-          searchRecipeClick: false,
+          randomRecipeClick:false,
+          randomRecipeLoading: false
         },
       });
-    recipes &&
-      localStorage.setItem("random-recipe", JSON.stringify(recipes[0]));
-    navigate(`/random-recipes/${recipes[0]?.id}`);
+     }
+   },[state.randomRecipeClick, recipes])
+
+  const getRandomRecipe = async (e) => {
+    e.preventDefault();
+       dispatch({
+          type: "RECIPE",
+          payload: {
+            randomRecipe:[],
+            randomRecipeClick: true,
+            randomRecipeLoading: true
+          },
+        });
+        navigate(`/random-recipes`);
+
   };
 
-//   const middle= (res)=>{
-//     dispatch({
-//       type: "RECIPE",
-//       payload: {
-//         randomRecipeLoading:true,
-//       },
-//     });
-//     return new Promise((resolve,reject)=>{
-//       if(res.length!==0) {
-//         resolve(res)
-//       }else{
-//         reject(new Error('error in promise'))
-//       }
+  const [randomSearchedRecipe] = useSearchRecipe(recipes, state.query);
+
+  useEffect(()=>{
+    if(state.searchRecipeClick===false || state.randomRecipeClick===true ) return;
+
+     if(recipes.length===0 ||recipes===undefined){
+
+     dispatch({
+      type: "RECIPE",
+      payload: {
+        randomRecipeLoading: true,
+        randomRecipe: []
       
-//       })
- 
+      },
+    });
+    return;
+     }else if(recipes){
+      if(!randomSearchedRecipe){
+        dispatch({
+          type: "RECIPE",
+          payload: {
+            randomSearchError: true,
+            randomRecipeLoading:false
+          },
+        });
+        return;
+      }
     
-//   }
-  
-//   const Getall = async (all)=>{
-  
-//      console.log(allx)
-//     middle(await allx).then((res)=>{
-//        console.log(res)
-//       const recipeSorted= res.sort(() => 0.5 - Math.random());
-//       dispatch({
-//         type: "RECIPE",
-//         payload: {
-//           randomRecipe:recipeSorted[0],
-//           randomRecipeLoading:false,
-//           randomRecipeClick: true,
-//           searchRecipeClick: false,
-//         },
-//       });
-     
-//       localStorage.setItem("random-recipe", JSON.stringify(recipeSorted[0]));
-//       navigate(`/random-recipes/${recipeSorted[0]?.id}`);
-//     })
+    dispatch({
+      type: "RECIPE",
+      payload: {
+        randomRecipe: randomSearchedRecipe,
+        randomRecipeLoading:false
+      },
+    });
+     console.log(randomSearchedRecipe)
+     localStorage.setItem("random-recipe", JSON.stringify(randomSearchedRecipe));
 
-// }
+     }
 
-// // Getall().then((res)=>{
-// //   dispatch({
-// //     type: "FETCH_SUCCESS",
-// //     payload: {
-// //       allRecipes:res,
-// //     },
-// //   });
-  
-// // })
+     return ()=>{
+      randomSearchedRecipe && dispatch({
+        type: "RECIPE",
+        payload: {
+          randomSearchClick:false
+        },
+      });
+     }
 
-
-//   // console.log(allx)
-
-//   //  console.log(ink.current)
-
-
-//   //  const nav =async () =>{
-//   //   return new Promise(async (resolve, reject)=>{
-//   //     const allre=  await allRecipes;
-//   //      console.log(allRecipes)
-//   //       console.log(allre)
-//   //    if(allre.length!==0) {
-//   //     resolve(allre)
-//   //   }else{
-//   //     dispatch({
-//   //       type: "RECIPE",
-//   //       payload: {
-//   //         randomRecipeLoading:true,
-//   //       },
-//   //     })
-//   //     reject(new Error('Hata allrecipes gelmedi'))
-//   //    }
-//   //   })
-//   //  }
-
-
-
-//   const getRandomRecipex = async () => {
-//  console.log("getRandomRecipe clicked")
-
-// if(allRecipes.length==0){
-// Getall(await allx);
- 
-// }else{
-//   const recipeSorted= allRecipes.sort(() => 0.5 - Math.random());
-//   dispatch({
-//     type: "RECIPE",
-//     payload: {
-//       randomRecipe:recipeSorted[0],
-//       randomRecipeLoading:false,
-//       randomRecipeClick: true,
-//       searchRecipeClick: false,
-//     },
-//   });
- 
-//   localStorage.setItem("random-recipe", JSON.stringify(recipeSorted[0]));
-//   navigate(`/random-recipes/${recipeSorted[0]?.id}`);
-// }
-//   // console.log(recipesAll)
-
-  
-//   // nav().then((recipesAll)=>{
-//   //   const recipeSorted= recipesAll.sort(() => 0.5 - Math.random());
-//   //   dispatch({
-//   //     type: "RECIPE",
-//   //     payload: {
-//   //       randomRecipe:recipeSorted[0],
-//   //       randomRecipeLoading:false,
-//   //       randomRecipeClick: true,
-//   //       searchRecipeClick: false,
-//   //     },
-//   //   });
-   
-//   //   localStorage.setItem("random-recipe", JSON.stringify(recipeSorted[0]));
-//   //   navigate(`/random-recipes/${recipeSorted[0]?.id}`);
-//   // })
-
-
-
-
-
-//   };
-
-  const [randomSearchedRecipe] = useSearchRecipe(allRecipes, state.query);
+   },[state.searchRecipeClick, recipes])
 
   const getSearchRecipe = (e) => {
     e.preventDefault();
-    //turkishtoEnglish() is a npm package to convert turkish characters
-    navigate(`/random-recipes/${turkishtoEnglish(state.query) || "random"}`);
-
-    randomSearchedRecipe &&
       dispatch({
         type: "RECIPE",
         payload: {
-          randomRecipe: randomSearchedRecipe,
-          randomRecipeClick: false,
+          randomRecipe:[],
           searchRecipeClick: true,
+          randomRecipeLoading:true,
+
         },
       });
+    //turkishtoEnglish() is a npm package to convert turkish characters
+    navigate(`/random-recipes/search/${turkishtoEnglish(state.query) || "random"}`);
+
   };
 
   const onChangeHandle = (e) => {
@@ -207,7 +172,8 @@ export const RecipeProvider = ({ children }) => {
     isLoadingRecipeDetail: state.isLoadingRecipeDetail,
     errorAllRecipes: errorAllRecipes,
     isLoadingAllRecipes: isLoadingAllRecipes,
-    randomRecipeLoading:state.randomRecipeLoading
+    randomRecipeLoading:state.randomRecipeLoading,
+    randomSearchError: state.randomSearchError
   };
 
   return (

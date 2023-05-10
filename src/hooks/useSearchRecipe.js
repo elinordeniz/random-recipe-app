@@ -21,6 +21,8 @@ const useSearchRecipe = (allRecipes, query = "tatlı") => {
     )
   );
 
+
+
   let str = vals?.toString();
 
   let titleList = str?.split(",");
@@ -37,6 +39,8 @@ const useSearchRecipe = (allRecipes, query = "tatlı") => {
   );
   const randomSearchedRecipe = randomRecipes && randomRecipes[0];
 
+  //  console.log(randomRecipes[0]+"randomRecipes[0]")
+  //   console.log(!randomRecipes[0])
   return [randomSearchedRecipe];
 };
 

@@ -5,8 +5,7 @@ const useAllRecipes = (configObj) => {
   const { axiosInstance, method, url, requestConfig = {} } = configObj;
   const [state, dispatch] = useReducer(RecipeReducer, initialState);
   const { allRecipes, errorAllRecipes, isLoadingAllRecipes } = state;
-  const [isMounted, setIsMounted] = useState(false);
-  const [check, setCheck] = useState(false);
+
   const [allx, setAllx]=useState([])
 
   const effectran = useRef(false);
@@ -37,9 +36,7 @@ const useAllRecipes = (configObj) => {
   
             let res = await response.data;
             // console.log("res"+res)
-  
-            //  console.log("beginning fetchAllRecipe try block > isMounted if block")
-  
+    
             resolve(res);
           } catch (err) {
             console.log(err);
@@ -77,11 +74,15 @@ const useAllRecipes = (configObj) => {
             },
           });
           controller.abort();
-        });
+        }).catch((err)=>{
+           console.log(err)
+          controller.abort();
+
+        })
     } else {
       //console.log("beginning effectran else block")
       effectran.current = true;
-      setCheck(true);
+ 
     }
   
     // console.log("end of useffect just before return")

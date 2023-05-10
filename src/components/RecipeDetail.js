@@ -77,10 +77,10 @@ useEffect(()=>{
             <div className="descriptions">
               <ul>
                 {recipeDetail[0]?.descriptionSteps?.map((step, key) => (
-                  <>
+                  <div key={key+97387872}>
                     <span key={key + 10000}>{step.step}. Adım</span>
                     <li key={key + 7000}>{step.description}</li>
-                  </>
+                  </div>
                 ))}
               </ul>
             </div>

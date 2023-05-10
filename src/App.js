@@ -12,9 +12,9 @@ function App() {
     <Routes location={location} key={location.path}>
       <Route element={<ProviderLayout />}>
         <Route path="/" element={<Layout />}>
-          <Route path="/random-recipes/:id" element={<RecipeCard />} />
-          <Route path="/random-recipes/:query" element={<RecipeCard />} />
-          <Route path="/random-recipe/:id" element={<RecipeDetail />} />
+          <Route path="/random-recipes" element={<RecipeCard />} />
+          <Route path="/random-recipes/search/:query" element={<RecipeCard />} />
+          <Route path="/random-recipes/:id" element={<RecipeDetail />} />
         </Route>
       </Route>
     </Routes>
