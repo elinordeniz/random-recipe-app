@@ -5,10 +5,10 @@ import '../styles/App.css'
 
 const Layout = () => {
   return (
-    <div className='App'>
+    <>
         <Nav /> 
         <Outlet />
-    </div>
+    </>
   )
 }
 

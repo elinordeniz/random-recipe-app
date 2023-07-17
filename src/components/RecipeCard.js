@@ -50,7 +50,7 @@ const RecipeCard = () => {
 
   return (
     <>
-      <div className="RecipeCard">
+    
         { randomRecipeLoading  && !errorAllRecipes && (
           <div className="loading">...Loading</div>
         )}
@@ -69,7 +69,7 @@ const RecipeCard = () => {
           </div>
         )}
         { (randomRecipe || localrandom ) && !randomRecipeLoading && !randomSearchError && (
-          <>
+           <div className="RecipeCard">
             <div className="image">
               <img src={randomRecipe?.img || localrandom?.img} alt="" />
             </div>
@@ -88,9 +88,9 @@ const RecipeCard = () => {
                 </Link>
               </div>
             </div>
-          </>
+          </div>
         )}
-      </div>
+  
       <div>
         <Modal
           isOpen={modalIsOpen}

@@ -3,10 +3,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 20px;
+  width: 70%;
+  height: 320px;
 
-  width: 100%;
-  height: 100%;
 }
 .Nav .header {
   margin-top: 10px;
@@ -16,7 +15,7 @@
   font-weight: 500;
   color: #d63447;
   margin-bottom: 60px;
-  margin-top: auto;
+
 }
 
 .search-area {
@@ -69,9 +68,28 @@
     0.125rem 0.125rem 1rem rgba(255, 154, 90, 0.5);
 }
 
-@media (max-width: 600px) {
+@media (max-width: 720px) {
+    .Nav{
+    width: 100%;
+    margin-top: 20px;
+
+  }  
+
+  .Nav form{
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+  }
+  .Nav .search-button{
+    
+    width: 40%;
+   
+  }
   .search-area {
-    display: block;
+    display: flex;
+    flex-direction: column;
   }
 
   .search-area .btn-random {
@@ -80,4 +98,6 @@
     justify-content: center;
     margin-top: 15px;
   }
+
+ 
 }

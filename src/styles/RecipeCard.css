@@ -1,13 +1,13 @@
 .RecipeCard {
   display: flex;
-  height: 450px;
-  width: 100%;
-  margin-top: 75px;
-  margin-bottom: auto;
-  height: 100%;
+  flex-direction: row;
+  width: 70%;
   align-items: center;
   justify-content: center;
+  padding: 10px;
 }
+
+
 
 .RecipeCard .loading,
 .error {
@@ -31,13 +31,20 @@
   margin: 10px 20px 30px 40px;
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 500px;
 }
 
 .RecipeCard img {
-  height: 450px;
-  width: 450px;
+  max-height: 450px;
+  max-width: 450px;
+
+
 }
+.RecipeCard .image{
+  width: 100%;
+  height: 100%;
+}
+
 
 .detail .title h1 {
   color: rgb(43, 41, 41);
@@ -135,27 +142,46 @@
   margin: 15px;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 720px) {
   .RecipeCard {
-    display: block;
+    width: 100%;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+
   }
 
   .detail {
+    width: auto;
     margin: 10px 20px 30px 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    align-content: center;
+  }
+  .detail .go-recipe-button{
+    padding: auto;
+    margin: auto;
+    margin-top: 20px;
   }
 
   .RecipeCard .image {
-    width: 100%;
+    width: auto;
+    height: auto;
     display: flex;
     align-items: center;
     justify-content: center;
-  }
+    padding: auto;
+    overflow: hidden;
 
+  }
   .RecipeCard img {
-    width: 100%;
+    width: auto;
+    height: auto;
+
   }
 }
